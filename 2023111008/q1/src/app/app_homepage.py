@@ -31,3 +31,18 @@ def display_food_items(items_list): #* Items list can be hard coded mostly since
     print("0. Go back")
     choice = input("Enter your choice: ")
     return choice
+
+def main_menu():
+    while True:
+        choice = display_homepage()
+        if choice == '1':
+            username, password = display_login()
+            #TODO implement login verification
+        elif choice == '2':
+            username, password, email, address = display_register()
+            #TODO implement registration
+        elif choice == '3':
+            print("Exiting the application...")
+            break
+        else:
+            print("Invalid choice. Please try again.")
