@@ -27,7 +27,7 @@
       - Quantity
     - User Details
   b. Multiple Orders from the same user.
-  
+
 4. **Manager Terminal**: Viewing activity of the restaurant like pending orders, available delivery agents, etc.
 
 #### Non Functional Requirements
@@ -46,7 +46,7 @@
 3. Cooks
 4. Manager
 
-### Use Cases - Fully Dressed Use-Cases
+### Use Cases - Fully Dressed
 
 #### 1. Customer Registration and Login
 

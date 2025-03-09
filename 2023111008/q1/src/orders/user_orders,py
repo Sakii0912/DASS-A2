@@ -1,0 +1,29 @@
+import sqlite3
+from persistence.database import connect_to_db
+
+def get_menu():
+    conn = connect_to_db()
+    cursor = conn.cursor()
+    try:
+        cursor.execute("SELECT * FROM menu")
+        menu = cursor.fetchall()
+        conn.close()
+        return menu
+    except sqlite3.Error as e:
+        conn.close()
+        print("Error getting menu: ", e)
+        return []
+
+def place_order(user_id, item_id, quantity):
+    conn = connect_to_db()
+    cursor = conn.cursor()
+    try:
+        price = cursor.execute("SELECT price FROM menu WHERE id = ?", (item_id,)).fetchone()[0] * quantity
+        cursor.execute("INSERT INTO orders (user_id, item_id, quantity, price) VALUES (?, ?, ?, ?)", (user_id, item_id, quantity, price))
+        conn.commit()
+        conn.close()
+        return True
+    except sqlite3.Error as e:
+        conn.close()
+        print("Error placing order: ", e)
+        return False
