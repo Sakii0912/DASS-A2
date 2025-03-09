@@ -1,8 +1,17 @@
+"""
+This file contains the main game logic for gobblet jr.
+Initialising the board, pieces, and checking for the winner.
+And also pick up and drop the pieces on the board.
+"""
+
 import pygame
 from piece import Piece
 from config import RED, YELLOW, CELL_SIZE
 
 class Game:
+    """
+    This is the main game class containing all the functionality.
+    """
     def __init__(self, board):
         self.board = board
         self.turn = "Player 1"
@@ -24,6 +33,9 @@ class Game:
         self.selected_piece = None
 
     def pick_piece(self, pos):
+        """
+        This function is used to pick up the piece from the board.
+        """
         for piece in reversed(self.pieces):
             if ((pos[0] - piece.x) ** 2 + (pos[1] - piece.y) ** 2) ** 0.5 < piece.size:
                 row, col = piece.y // CELL_SIZE, piece.x // CELL_SIZE
@@ -38,6 +50,9 @@ class Game:
         return None
 
     def drop_piece(self, piece):
+        """
+        This is used to drop the piece on the board.
+        """
         if self.winner or not piece:
             return
 
@@ -48,7 +63,8 @@ class Game:
             if not stack or piece.size > stack[-1].size:
                 previous_position = None
                 if piece in self.pieces:
-                    old_row, old_col = piece.prev_y // CELL_SIZE, piece.prev_x // CELL_SIZE
+                    old_row = piece.prev_y // CELL_SIZE
+                    old_col = piece.prev_x // CELL_SIZE
                     if 0 <= old_row < 3 and 0 <= old_col < 3:
                         previous_position = (old_row, old_col)
 
@@ -61,7 +77,7 @@ class Game:
                 elif self.check_winner():
                     self.winner = self.turn
                 else:
-                    self.turn = "Player 2" if self.turn == "Player 1" else "Player 1"  
+                    self.turn = "Player 2" if self.turn == "Player 1" else "Player 1"
             else:
                 piece.x, piece.y = piece.prev_x, piece.prev_y
 
@@ -70,6 +86,9 @@ class Game:
             piece.x, piece.y = piece.prev_x, piece.prev_y
 
     def check_winner(self):
+        """
+        This function is used to check the winner of the game.
+        """
         def get_top_player(row, col):
             if self.board.grid[row][col]:
                 return self.board.grid[row][col][-1].player
@@ -91,12 +110,18 @@ class Game:
         return False
 
     def draw_winner(self, screen):
+        """
+        This function is used to draw the winner on the screen.
+        """
         if self.winner:
             font = pygame.font.Font(None, 50)
             text = font.render(f"{self.winner} Wins!", True, (0, 200, 0))
             screen.blit(text, (200, 50))
 
     def draw_pieces(self, screen):
+        """
+        This function is used to draw the pieces on the screen.
+        """
         for piece in self.pieces:
             piece.draw(screen)
         self.draw_winner(screen)

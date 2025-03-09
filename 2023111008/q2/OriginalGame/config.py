@@ -1,3 +1,9 @@
+"""
+This file is for all the configurations required for the game.
+It contains things like the screen sizes, grid sizes, cell sizes and
+colours
+"""
+
 S_WIDTH, S_HEIGHT = 800, 800
 WIDTH, HEIGHT = 600, 600
 GRID_SIZE = 3
